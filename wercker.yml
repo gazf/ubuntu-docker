@@ -1,0 +1,31 @@
+box: docker:latest
+
+build:
+  docker: true
+  steps:
+    - script:
+        name: install nodejs
+        code: apk add --update --no-cache nodejs
+    - script:
+        name: export variables
+        code: |
+          export DOCKER_IMAGE_NAME="$(node -p "require('./package.json').docker.name")"
+          export DOCKER_IMAGE_TAG="$(node -p "require('./package.json').docker.tag")"
+          export DOCKER_IMAGE="$DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+          echo $DOCKER_IMAGE
+    - script:
+        name: docker login
+        code: echo $DOCKERHUB_PASSWORD | docker login --username="$DOCKERHUB_USERNAME" --password-stdin
+    - script:
+        name: docker build
+        code: docker build --tag="$DOCKER_IMAGE" .
+    - script:
+        name: docker push
+        code: docker push $DOCKER_IMAGE
+        
+test:
+  box: ubuntu:latest
+  steps:
+    - internal/docker-build:
+        dockerfile: Dockerfile
+        image-name: test-image
