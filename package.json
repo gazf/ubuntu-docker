@@ -1,0 +1,9 @@
+{
+  "name": "ubuntu-docker",
+  "description": "docker installed ubuntu image.",
+  "version": "0.0.1",
+  "docker": {
+    "name": "ubuntu-docker",
+    "tag": "0.0.1"
+  }
+}
