@@ -10,3 +10,6 @@ docker pull gazf/ubuntu-docker
 
 ## Base image
 ubuntu:latest
+
+## Installed Docker version
+Please see http://get.docker.com
