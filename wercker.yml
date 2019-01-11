@@ -24,7 +24,7 @@ build:
         code: docker push $DOCKER_IMAGE
         
 test:
-  box: ubuntu:latest
+  box: alpine:latest
   steps:
     - internal/docker-build:
         dockerfile: Dockerfile
